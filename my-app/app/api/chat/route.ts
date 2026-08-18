@@ -1,21 +1,18 @@
-import { google } from "@ai-sdk/google";
+ import { google } from "@ai-sdk/google";
 import { convertToModelMessages, streamText } from "ai";
 
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const messages = body.messages;
+    const { messages } = await req.json();
 
-    if (!messages || !Array.isArray(messages)) {
+    if (!Array.isArray(messages)) {
       return new Response(
-        JSON.stringify({ error: "Invalid messages format" }),
+        JSON.stringify({ error: "Invalid messages" }),
         {
           status: 400,
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
     }
@@ -31,13 +28,11 @@ export async function POST(req: Request) {
 
     return new Response(
       JSON.stringify({
-        error: "Failed to generate response",
+        error: "Gemini request failed",
       }),
       {
         status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
       }
     );
   }

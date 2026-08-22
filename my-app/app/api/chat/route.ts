@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       );
     }
     const result = streamText({
-      model: google("gemini-2.0-flash"),
+      model: google("gemini-3.6-flash"),
       messages: await convertToModelMessages(messages),
     });
     return result.toUIMessageStreamResponse();
